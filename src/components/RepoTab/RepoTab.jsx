@@ -25,6 +25,7 @@ function RepoTab(props) {
         },
     ]
     let req, login, repos = null
+
     // По приходу ответа готовим массив репозиториев и формируем данные
     if(!!props.data.repositoryOwner){
         req = props.data.repositoryOwner.repositories.nodes

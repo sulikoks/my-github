@@ -9,12 +9,13 @@ import {HttpLink} from "apollo-link-http";
 import ApolloClient from "apollo-client";
 import {BrowserRouter} from 'react-router-dom';
 
+const TOKEN = 'ed671146e001c531e1412d31460d556962981bfc'
 const cache = new InMemoryCache();
 const link = new HttpLink({
     uri: 'https://api.github.com/graphql',
     credentials: 'same-origin',
     headers: {
-        Authorization: 'Bearer ed671146e001c531e1412d31460d556962981bfc',
+        Authorization: `Bearer ${TOKEN}`,
     }
 });
 const client = new ApolloClient({
