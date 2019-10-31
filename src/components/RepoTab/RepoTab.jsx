@@ -30,7 +30,7 @@ function RepoTab(props) {
         req = props.data.repositoryOwner.repositories.nodes
         repos = req.map(repo => ({
             ...repo,
-            lang: repo.primaryLanguage.name,
+            lang: !!repo.primaryLanguage ? repo.primaryLanguage.name : '',
             key: repo.id,
         }))
         login = props.data.repositoryOwner.login

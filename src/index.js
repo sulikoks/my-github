@@ -14,7 +14,7 @@ const link = new HttpLink({
     uri: 'https://api.github.com/graphql',
     credentials: 'same-origin',
     headers: {
-        Authorization: 'Bearer 7eb9da4fc43dd241f73677b1f54da20a27ca98e8',
+        Authorization: 'Bearer ed671146e001c531e1412d31460d556962981bfc',
     }
 });
 const client = new ApolloClient({
