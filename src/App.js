@@ -49,7 +49,7 @@ function App() {
                             return <RepoTab/>
                         }}/>
                         <Route path='/repo/:name?' render={() => {
-                            setCurrent('repod')
+                            setCurrent('repo')
                             return <Repo/>
                         }}/>
 

@@ -1,6 +1,5 @@
 export const timeFunc = (updatedAt) => {
     const minPassed = Math.floor((new Date() - new Date(updatedAt))/1000/60)
-    debugger
     if(minPassed < 1)
         return 'Now'
     else if(minPassed < 60)

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {withRouter} from "react-router"
 import {useQuery} from "@apollo/react-hooks";
 import {repoQuery} from "./queries";
@@ -7,27 +7,33 @@ import {timeFunc} from "../utils/timeFunc";
 import {compose} from "recompose";
 
 const Repo = (props) => {
-    // Хук=)
+    // Хуксы загрузки, таймера и данных репозитория
+    const [isLoad, setIsLoad] = useState(false)
     const [updateTime, setUpdateTime] = useState('')
+    const [repo, setRepo] = useState({})
 
     // Цепляемся по урлу и делаем запрос
     const name = !!props.match.params.name
         ? props.match.params.name
         : props.history.push('/repos') //Временное решение
     const {data} = useQuery(repoQuery, {variables: {name}}) //Реализовал два разных запроса с помощью hoc и HOOK
-    let isLoad = !!data
 
-    // Тащим данные из ответа
-    const {id, description, homepageUrl, nameWithOwner, primaryLanguage, projectsResourcePath, updatedAt}
-        = !!isLoad ? data.repositoryOwner.repository : ''
+    // Component did mount
+    useEffect(() => {
+        if (!!data) {
+            setIsLoad(!!data)
+            setRepo(data.repositoryOwner.repository)
+        }
+    })
+
+    // Раскукоживаем данные о репозиторие
+    const {id, description, homepageUrl, nameWithOwner, primaryLanguage, projectsResourcePath, updatedAt} = repo
     const lang = !!primaryLanguage ? primaryLanguage.name : ''
-    console.log(updatedAt)
-    // Обновления даты раз в минуту
+
+    // Обновления даты изначально и раз в минуту
     if (updateTime === '' && isLoad) setUpdateTime(timeFunc(updatedAt))
     setInterval(() => {
         setUpdateTime(timeFunc(updatedAt))
-        debugger
-        console.log(updatedAt)
     }, 60000)
 
     // Пока нет ответа страницу не грузим
@@ -46,5 +52,4 @@ const Repo = (props) => {
         </Descriptions>
     </div>
 }
-
 export default compose(withRouter, React.memo)(Repo)
